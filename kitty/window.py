@@ -2375,6 +2375,15 @@ class Window:
     def show_kitty_doc(self, which: str = '') -> None:
         url = docs_url(which)
         get_boss().open_url(url)
+
+    @ac('misc', '''
+    Open AI command suggestion dialog. Prompts user for a description and uses Gemini AI to suggest a command,
+    then inserts it at the cursor position.
+
+    Requires GEMINI_API_KEY environment variable to be set.
+    ''')
+    def ai_suggest(self) -> None:
+        get_boss().run_kitten('ai_suggest')
     # }}}
 
 
