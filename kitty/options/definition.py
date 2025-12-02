@@ -4682,5 +4682,13 @@ map('Quit kitty',
     'quit cmd+q quit',
     only='macos',
     )
+
+map('AI command suggestion',
+    'ai_suggest ctrl+k ai_suggest',
+    long_text='''
+Open a dialog to get AI-powered command suggestions using Gemini. 
+Requires GEMINI_API_KEY environment variable to be set.
+'''
+    )
 egr()  # }}}
 egr()  # }}}
