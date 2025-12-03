@@ -173,6 +173,6 @@ if __name__ == '__main__':
 elif __name__ == '__doc__':
     cd = sys.cli_docs  # type: ignore
     cd['usage'] = ''
-    cd['options'] = ''
+    cd['options'] = lambda: ''
     cd['help_text'] = 'Get AI command suggestions using Gemini'
     cd['short_desc'] = 'AI command suggestion using Gemini'
