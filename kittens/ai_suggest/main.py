@@ -9,12 +9,12 @@ from kitty.typing_compat import BossType, KeyEventType, ScreenSize
 from ..tui.handler import Handler, result_handler
 from ..tui.line_edit import LineEdit
 from ..tui.loop import Loop
-from ..tui.operations import RESTORE_CURSOR, SAVE_CURSOR, styled
+from ..tui.operations import RESTORE_CURSOR, SAVE_CURSOR, MouseTracking, styled
 
 
 class AISuggestHandler(Handler):
     use_alternate_screen = False
-    mouse_tracking = False
+    mouse_tracking = MouseTracking.none
 
     def __init__(self, window_id: int):
         self.window_id = window_id
@@ -44,7 +44,7 @@ class AISuggestHandler(Handler):
 
     def on_key(self, key_event: KeyEventType) -> None:
         if key_event.matches('enter'):
-            self.description = self.line_edit.all_text()
+            self.description = self.line_edit.current_input
             self.quit_loop(0)
             return
         if key_event.matches('ctrl+c') or key_event.matches('escape'):
@@ -90,7 +90,7 @@ Now provide the command for: {description}"""
     # Try gemini-2.5-flash first as requested, fallback to other models if not available
     model_names = ['gemini-2.0-flash-exp', 'gemini-1.5-flash']
     # Note: When gemini-2.5-flash becomes available, add 'gemini-2.5-flash' to the beginning of the list
-    last_error = None
+    last_error: Exception | None = None
 
     for model_name in model_names:
         try:
@@ -106,7 +106,7 @@ Now provide the command for: {description}"""
                     content = result['candidates'][0].get('content', {})
                     parts = content.get('parts', [])
                     if parts and 'text' in parts[0]:
-                        command = parts[0]['text'].strip()
+                        command: str = parts[0]['text'].strip()
                         # Remove markdown code blocks if present
                         if command.startswith('```'):
                             lines = command.split('\n')
