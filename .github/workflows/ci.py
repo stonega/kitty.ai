@@ -220,6 +220,8 @@ IGNORED_DEPENDENCY_CVES = [
     # Python stdlib
     'CVE-2025-8194', # DoS in tarfile
     'CVE-2025-6069', # DoS in HTMLParser
+    'CVE-2025-13836', # DoS in http client reading from malicious server
+    'CVE-2025-12084',  # DoS in xml.dom.minidom unused in kitty
     # glib
     'CVE-2025-4056', # Only affects Windows, on which we dont run
     # github.com/nwaples/rardecode/v2
